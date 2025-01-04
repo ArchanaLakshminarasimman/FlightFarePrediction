@@ -187,50 +187,194 @@ KNeighborsRegressor from sklearn was utilized for training. GridSearchCV optimiz
 #### **Conclusion:**
 KNN proved to be an efficient model for this dataset, achieving a lower RMSE of 14.674 compared to Linear Regression and SVM, demonstrating its effectiveness.
 
-**Gradient Boosting**
+### **Gradient Boosting**
 
-**Objective:**
+#### **Objective:**
 
 Gradient Boosting was employed to predict average flight fares between U.S. city pairs based on historical data (1993–2024). The goal was to leverage route-specific attributes (distance, passenger volume, market share, etc.) and optimize model performance through hyperparameter tuning.
 
-**Data Preprocessing:**
+#### **Data Preprocessing:**
 
 - Missing values were dropped for key features.
 - Scaling: Numerical features were standardized using StandardScaler for consistent scaling.
 
-**Model Training:**
+#### **Model Training:**
 
 - Model: Gradient Boosting Regressor from sklearn.ensemble for handling non-linear relationships and feature interactions.
-- Hyperparameter Tuning: GridSearchCV optimized:
-○ n_estimators (number of stages), learning_rate (step size), and max_depth
-(tree depth).
-- Training: 80-20 train-test split with 5-fold cross-validation ensured robust
-performance.
+- Hyperparameter Tuning: GridSearchCV optimized: n_estimators (number of stages), learning_rate (step size), and max_depth (tree depth).
+- Training: 80-20 train-test split with 5-fold cross-validation ensured robust performance.
 
-**Evaluation Metrics:**
+#### **Evaluation Metrics:**
 
 - MSE: Lower error (373.93) indicated better predictions.
 - R²: A value of 19.34 highlighted effective data relationship capture.
 
-**Model Insights:**
+#### **Model Insights:**
 
 Feature Importance:
 - Top predictors: nsmiles (distance) and fare_low (lowest fare offered).
 - Temporal features (Year, quarter) moderately influenced fare variations.
 
 
-**Visualizations:**
+#### **Visualizations:**
 
-1. Feature Importance:
+- Feature Importance:
 Horizontal bar chart highlighting nsmiles, fare_low, and passengers as key
 predictors.
-2. Actual vs. Predicted Fares:
+- Actual vs. Predicted Fares:
 Scatter plot showing alignment of predicted fares with actual values, indicating model accuracy.
-3. Error Distribution:
+- Error Distribution:
 Histogram displaying a symmetric, narrow error spread around zero, confirming well- calibrated predictions.
 
-**Conclusion:**
+#### **Conclusion:**
 
 The Gradient Boosting model effectively predicts flight fares, demonstrating strong R² and low error metrics. Key predictors like route distance and competitive pricing underline its ability to
 capture fare dynamics. This model benefits airlines and passengers by offering actionable insights into pricing trends and planning budgets efficiently.
 
+### **XG Boost**
+
+#### **Objective:**
+
+XGBoost was employed to predict airline fares due to its efficiency, scalability, and ability to handle regression problems effectively.
+
+#### **Data Preparation:**
+
+- Selected Features: Year, nsmiles, passengers, large_ms, fare_lg, lf_ms, fare_low.
+- Target Variable: fare (average flight fare).
+- Data was split into training (80%) and testing (20%) subsets for validation.
+
+#### **Model Training:**
+
+- Initial Training: XGBoost Regressor was trained using default parameters.
+- Hyperparameter Tuning: GridSearchCV optimized parameters:
+learning_rate: [0.01, 0.1, 0.2], max_depth: [3, 5, 7], n_estimators: [50, 100, 200], subsample: [0.8, 1.0]
+
+#### **Evaluation Metrics:**
+
+- Train RMSE: 10.96, Test RMSE: 12.93
+- Train R²: 0.972, Test R²: 0.961
+
+#### **Model Insights:**
+- Feature Importance: Key predictors were large_ms, nsmiles, and passengers.
+- Residual Analysis: Errors were unbiased and normally distributed.
+
+#### **Visualizations:**
+
+-Actual vs. Predicted Fares: Scatter plot showed strong correlation, with
+predictions closely matching actual values.
+-Feature Importance: Highlighted nsmiles, large_ms, and passengers as
+critical predictors.
+-Residual Analysis: Narrow, symmetric error distribution around zero
+confirmed accuracy.
+
+#### **Conclusion:**
+
+XGBoost demonstrated excellent predictive performance, achieving low RMSE and high R².
+It is a reliable tool for fare prediction, offering meaningful insights into the factors driving airline pricing.
+
+### **Ensemble model**
+
+#### **Objective:**
+
+The ensemble model combined Random Forest and XGBoost to improve prediction
+accuracy and robustness by leveraging the strengths of both models.
+
+#### **Implementation Steps:**
+
+#### **Model Selection:**
+
+- Random Forest: Reduced overfitting and variance with decision tree ensembles.
+- XGBoost: Optimized gradient boosting for handling complex data relationships.
+
+#### **Ensemble Technique:**
+
+A Voting Regressor combined predictions from both models using a weighted
+average to enhance performance.
+ 
+#### **Preprocessing:**
+
+Categorical features (e.g., city names, airport codes) were one-hot encoded. The dataset was split into training (80%) and testing (20%) sets.
+
+#### **Model Training:**
+
+- XGBoost Parameters: Learning rate: 0.1, max depth: 3, estimators: 50.
+- Random Forest Parameters: Max depth: 5, estimators: 50.
+- Both models were trained on sampled subsets of data to optimize computational efficiency.
+
+#### **Evaluation Metrics:**
+
+RMSE for both training and testing datasets demonstrated significant improvement compared to individual models.
+
+#### **Key Results:**
+
+The ensemble model outperformed individual regressors, effectively capturing complex,relationships in airline fare data.
+This ensemble modeling approach highlights the potential of integrating machine learning techniques to enhance predictive performance in regression tasks, making it an ideal solution for forecasting airline fares.
+
+
+### **Random Forest :**
+
+#### **Objective**
+
+The goal was to predict US airline flight fares using historical data and Random Forest,leveraging its ability to handle non-linear relationships and reduce overfitting. Accurate predictions assist airlines in pricing and consumers in budgeting.
+
+#### **Data Preprocessing:**
+
+- Features Selected: Year, nsmiles, passengers, large_ms, fare_lg, lf_ms, fare_low.
+- Data Cleaning: Missing values were removed or imputed, and categorical variables
+were one-hot encoded for compatibility.
+- Feature Selection: SelectFromModel identified important features (nsmiles, fare_lg,lf_ms, fare_low).
+
+#### **Model Training:**
+
+- Data Split: 80% training, 20% testing.
+- Hyperparameter Tuning: GridSearch optimized parameters: n_estimators: [50,75], max_depth: [10, 15], max_features: ['sqrt', 'log2']
+
+#### **Evaluation Metrics:**
+
+#### **Before Feature Selection:**
+- Train RMSE: 9.27, Test RMSE: 13.39
+- Train R²: 0.98, Test R²: 0.96
+
+#### **After Feature Selection:**
+
+- Train RMSE: 10.82, Test RMSE: 14.76
+- Train R²: 0.97, Test R²: 0.95
+
+#### **Insights:**
+
+- Performance remained strong after feature selection, despite a slight RMSE increase.
+- Key predictors like nsmiles and fare_lg ensured consistent accuracy.
+
+#### **Visualizations:**
+
+- Actual vs. Predicted Fares: Showed alignment before and after feature selection.
+- Residual Distribution: Highlighted minimal bias in predictions, confirming reliability.
+
+### **Model Comparison**
+
+* Linear Regression: A simple model providing a baseline understanding of
+relationships between variables.
+* Random Forest Regressor: An ensemble model capable of capturing complex
+patterns and interactions.
+* XGBoost Regressor: Optimized gradient boosting for precision, scalability, and
+efficiency.
+* Voting Regressor (Ensemble Model): Combines Random Forest and XGBoost for
+enhanced performance by leveraging their strengths.
+
+### **Metrics Used for Evaluation:**
+
+* Root Mean Squared Error (RMSE): Indicates prediction accuracy (lower is better).
+* R-squared (R²): Reflects how well the model explains variance in the data (higher is better).
+* Mean Absolute Error (MAE): Measures average prediction errors (lower is better).
+  
+### **Key Results:**
+
+* Linear Regression: Established reliable baseline metrics.
+* Random Forest Regressor: Captured complex patterns with strong RMSE and R²
+values.
+* XGBoost Regressor: Achieved high precision with competitive RMSE and R².
+* Ensemble Model: Delivered the best performance with the lowest RMSE and highest R², highlighting its predictive accuracy.
+  
+### **Observations**
+
+The ensemble model proved most effective by integrating the complementary strengths of Random Forest and XGBoost. This comparison demonstrates the importance of exploring diverse algorithms to improve accuracy, robustness, and insights into data relationships.

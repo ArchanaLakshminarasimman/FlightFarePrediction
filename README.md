@@ -130,9 +130,9 @@ The SGDRegressor from the sklearn library was employed for training. GridSearchC
 
 #### **Evaluation Metrics:**
 
--Model 1: All variables included, RMSE: 17.318
--Model 2: Selected variables used, RMSE: 17.264
--Model 3: Selected variables with GridSearchCV, RMSE: 17.263
+- Model 1: All variables included, RMSE: 17.318
+- Model 2: Selected variables used, RMSE: 17.264
+- Model 3: Selected variables with GridSearchCV, RMSE: 17.263
 
 
 #### **Conclusion:**
@@ -260,11 +260,11 @@ learning_rate: [0.01, 0.1, 0.2], max_depth: [3, 5, 7], n_estimators: [50, 100, 2
 
 #### **Visualizations:**
 
--Actual vs. Predicted Fares: Scatter plot showed strong correlation, with
+- Actual vs. Predicted Fares: Scatter plot showed strong correlation, with
 predictions closely matching actual values.
--Feature Importance: Highlighted nsmiles, large_ms, and passengers as
+- Feature Importance: Highlighted nsmiles, large_ms, and passengers as
 critical predictors.
--Residual Analysis: Narrow, symmetric error distribution around zero
+- Residual Analysis: Narrow, symmetric error distribution around zero
 confirmed accuracy.
 
 #### **Conclusion:**
